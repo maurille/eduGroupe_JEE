@@ -1,0 +1,4 @@
+com\mau\nouvelAn\metier\Message.class
+com\mau\nouvelAn\repositories\MessageDepot.class
+com\mau\nouvelAn\web\IndexController.class
+com\mau\nouvelAn\repositories\IMessageDepot.class
