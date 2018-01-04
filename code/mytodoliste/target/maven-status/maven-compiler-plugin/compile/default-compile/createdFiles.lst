@@ -1,0 +1,4 @@
+com\mau\mytodoliste\utils\simpleCorsFilter.class
+com\mau\mytodoliste\repositories\TacheRepository.class
+com\mau\mytodoliste\web\IndexController.class
+com\mau\mytodoliste\metier\Tache.class
