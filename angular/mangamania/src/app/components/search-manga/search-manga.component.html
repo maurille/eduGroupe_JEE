@@ -1,0 +1,12 @@
+<form>
+    <div class="form-group">
+        <label foe="searchTerm" >Recherche titre:  {{searchTerm}} </label>
+        <input type="text"
+               class="form-control" 
+               name="searchTerm" 
+               id="searchTerm" 
+               [ngModel]="searchTerm"
+               (ngModelChange)="changeTerm($event)" />
+      </div>      
+
+</form>

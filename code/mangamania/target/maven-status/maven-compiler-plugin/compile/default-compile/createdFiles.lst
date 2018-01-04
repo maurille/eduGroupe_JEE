@@ -1,0 +1,4 @@
+com\mau\mangamania\metier\Manga.class
+com\mau\mangamania\web\IndexController.class
+com\mau\mangamania\repositories\MangaRepository.class
+com\mau\mangamania\util\simpleCorsFilter.class
