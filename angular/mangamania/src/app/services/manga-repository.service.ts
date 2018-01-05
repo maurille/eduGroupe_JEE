@@ -3,17 +3,25 @@ import { Manga } from '../metier/manga';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Page } from '../metier/page';
 
 
 @Injectable()
 export class MangaRepositoryService {
 
-  private mangaSubject : BehaviorSubject<Manga[]>;
+  private mangaSubject : BehaviorSubject<Page<Manga>>;
   private searchTitre: String; // pour effectuer une recherche sur le titre
+  private noPage: number;
+
+  public setNoPage(no : number) :void{
+    this.noPage = no;
+    this.refreshListe();
+  }
 
   constructor(private _http: HttpClient) {
           this.searchTitre="";
-          this.mangaSubject = new BehaviorSubject([]);
+          this.mangaSubject = new BehaviorSubject(new Page([], 0, 0, 0, 0, 1,  true, false, null));
+          this.noPage = 0;
                   
    }
    // pour modifier le filtrage de la listes des mangas en fonction du titre
@@ -22,17 +30,18 @@ export class MangaRepositoryService {
      this.refreshListe();
    }
 
-public listeMangaObservable() : Observable<Manga[]>{
+public listeMangaObservable() : Observable<Page<Manga>>{
       return this.mangaSubject.asObservable();
    }
 
    public refreshListe(): void {
 
-      let url = "http://localhost:8080/mangamania/mangas";
+      let url = "http://localhost:8080/mangamania/pmangas";
       if(this.searchTitre != ""){
         url+=`/search/${this.searchTitre}`;// attention c'est bien avec les bas de cote
       }
-      this._http.get<Manga[]>(url)
+      url+=`?page=${this.noPage}`;
+      this._http.get<Page<Manga>>(url)
                 .toPromise()
                 .then(mangas => this.mangaSubject.next(mangas))
    }

@@ -8,6 +8,7 @@ import { MangaRepositoryService } from './services/manga-repository.service';
 import { SearchMangaComponent } from './components/search-manga/search-manga.component';
 import { ListeMangaComponent } from './components/liste-manga/liste-manga.component';
 import { EditMangaComponent } from './components/edit-manga/edit-manga.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 
 
@@ -16,12 +17,13 @@ import { EditMangaComponent } from './components/edit-manga/edit-manga.component
     AppComponent,
     SearchMangaComponent,
     ListeMangaComponent,
-    EditMangaComponent
+    EditMangaComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    PaginationModule.forRoot(),
     RouterModule.forRoot([
       {path: 'liste', component: ListeMangaComponent},
       {path: 'edit/:id', component: EditMangaComponent},

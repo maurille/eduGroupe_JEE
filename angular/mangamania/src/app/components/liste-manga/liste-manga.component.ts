@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Manga } from '../../metier/manga';
 import { MangaRepositoryService } from '../../services/manga-repository.service';
+import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-liste-manga',
@@ -10,12 +12,22 @@ import { MangaRepositoryService } from '../../services/manga-repository.service'
 })
 export class ListeMangaComponent implements OnInit {
 
-  public mangas : Observable<Manga[]>;
+  public mangas : Subject<Manga[]>;
+  public mangasSuscription: Subscription;
+  public totalItems: number;
+  public currentPage : number;
+
   constructor(private _mangaRepository: MangaRepositoryService) { }
 
   ngOnInit() {
-     // ecoute la liste des mangas
-     this.mangas= this._mangaRepository.listeMangaObservable();
+    this.mangas = new Subject();
+    this.mangasSuscription = this._mangaRepository.listeMangaObservable()
+                                                  .subscribe(page =>{
+                                                  this.totalItems = page.totalElements
+                                                  this.currentPage = page.number+1
+                                                  this.mangas.next(page.content);
+                                    });
+     
      // demande au service de rafraichir la liste à partir du backend rest
      this._mangaRepository.refreshListe();
   }
@@ -26,6 +38,10 @@ export class ListeMangaComponent implements OnInit {
               console.log("supprimer" + m.id);
               this._mangaRepository.refreshListe();
     });
+  }
+
+  public pageChanged(event: any): void{
+    this._mangaRepository.setNoPage(event.page-1);
   }
 
 }

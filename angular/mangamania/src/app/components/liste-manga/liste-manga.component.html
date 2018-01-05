@@ -1,6 +1,8 @@
 
 <app-search-manga></app-search-manga>
 <a routerLink='/edit/0' class="btn btn-primary"> nouveau manga</a>
+<pagination [boundaryLinks]="true" [totalItems]="totalItems" [ngModel]="currentPage"   [itemsPerPage]="5" class="pagination-sm"
+              previousText="&lsaquo;"  nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" (pageChanged)="pageChanged($event)"></pagination>
   <table  class="table table-bordered table-striped">
     <thead>
       <tr> <th>titre</th> <th>auteur</th><th>dateParution</th> <th>genre</th> <th>rating</th><th>actions</th></tr>
