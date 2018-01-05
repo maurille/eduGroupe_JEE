@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,12 +38,28 @@ public class IndexController {
 		return data;
 	 }
 
+	@RequestMapping(value="/pmangas", method=RequestMethod.GET, produces=org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	 public Page<Manga> listePManga(@PageableDefault(page=0, size=5)Pageable page){
+		
+		return mangaRepository.findAll(page);
+
+	 }
+
 	
 	@RequestMapping(value="/mangas/search/{search:.+}", method=RequestMethod.GET, produces=org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	 public List<Manga> searchManga(@PathVariable("search") String search){
 		return mangaRepository.findByTitreContaining(search);
 	 }
+	
+	@RequestMapping(value="/pmangas/search/{search:.+}", method=RequestMethod.GET, produces=org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	 public Page<Manga> searchPManga(@PathVariable("search") String search, @PageableDefault(page=0, size=5) Pageable page){
+		return mangaRepository.findByTitreContaining(search, page);
+	 }
+	
+	
 	
 	@RequestMapping(value="/mangas", method=RequestMethod.POST, 
 					produces=org.springframework.http.MediaType.APPLICATION_JSON_VALUE)

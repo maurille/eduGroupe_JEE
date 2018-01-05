@@ -7,4 +7,6 @@ import com.mau.mytodoliste.metier.Tache;
 
 public interface TacheRepository extends PagingAndSortingRepository<Tache, Integer>{
 	 List<Tache> findByLibelleContaining(String libelle);
+
+	List<Tache> findByPrioriteGreaterThan(int priorite);
 }

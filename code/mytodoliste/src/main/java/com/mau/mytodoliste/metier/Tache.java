@@ -17,9 +17,9 @@ public class Tache {
 		private String libelle;
 		private String description;
 		private int priorite;
-		@JsonFormat(pattern="yyyy-MM-dd")
+		//@JsonFormat(pattern="yyyy-MM-dd")
 		private LocalDate dateCreation;
-		@JsonFormat(pattern="yyyy-MM-dd")
+		//@JsonFormat(pattern="yyyy-MM-dd")
 		private LocalDate dateLimite;
 		private String contexte;
 		private boolean termine;
